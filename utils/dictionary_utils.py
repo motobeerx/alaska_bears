@@ -12,7 +12,7 @@ def json_string_to_dictionary_object(plain_text):
     return response
 
 
-def json_string_to_dictionary(plain_text):
+def json_to_python(plain_text):
     try:
         dictionary = json.loads(plain_text)
         return dictionary

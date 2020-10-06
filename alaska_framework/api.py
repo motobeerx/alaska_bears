@@ -1,4 +1,4 @@
-from utils.dictionary_utils import json_string_to_dictionary
+from utils.dictionary_utils import json_to_python
 from configurations.alaska_config import AlaskaConfig
 import requests
 
@@ -23,12 +23,12 @@ class Request:
 
     def view_all_bears(self):
         response = requests.get(AlaskaConfig.ALASKA_BEAR)
-        response = json_string_to_dictionary(response.text)
+        response = json_to_python(response.text)
         return response
 
     def view_bear(self, bear):
         response = requests.get(AlaskaConfig.ALASKA_SPECIFIC_BEAR.format(id=bear.id))
-        response = json_string_to_dictionary(response.text)
+        response = json_to_python(response.text)
         return response
 
     def is_bear(self, bear):
@@ -36,7 +36,7 @@ class Request:
 
     def is_bear_name(self, bear):
         bear_in_alaska = self.view_bear(bear)
-        return False if bear_in_alaska is None or bear_in_alaska['bear_name'] != bear.name else True
+        return False if bear_in_alaska is None or bear_in_alaska['bear_name'] != str(bear.name) else True
 
     def is_bear_type(self, bear):
         bear_in_alaska = self.view_bear(bear)
